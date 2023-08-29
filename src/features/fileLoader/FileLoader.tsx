@@ -1,4 +1,5 @@
 import React from 'react'
+import { gpxToGeoJson } from './gpxToGeoJson';
 
 export const FileLoader = () => {
   const [data, setData] = React.useState({})
@@ -10,6 +11,8 @@ export const FileLoader = () => {
       const reader = new FileReader()
       reader.onload = () => {
         const readedText = reader.result
+        const geoJson = gpxToGeoJson(String(readedText))
+        setData(geoJson)
       }
       reader.readAsText(file)
     }
@@ -18,7 +21,7 @@ export const FileLoader = () => {
   return (
     <div>
       <input type="file" onChange={fileChangeHandle}/>
-      <pre>{JSON.stringify(data)}</pre>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   )
 }
