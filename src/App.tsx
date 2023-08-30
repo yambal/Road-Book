@@ -1,14 +1,19 @@
 import React from 'react';
-import Button from '@mui/material/Button';
 import { FileLoader } from './features/fileLoader/FileLoader';
 import { MapView } from './features/mapView/MapView';
+import { Provider } from 'react-redux'
+import { store } from './app/store'
+import { Counter } from './features/counter/Counter';
+
 function App() {
   return (
-    <div className="App">
-      <Button variant="contained">Hello world</Button>
-      <FileLoader />
-      <MapView centerPotision={[35, 135]}/>
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <FileLoader />
+        <MapView centerPotision={[35, 135]}/>
+        <Counter />
+      </div>
+    </Provider>
   );
 }
 
