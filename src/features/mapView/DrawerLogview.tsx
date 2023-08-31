@@ -12,26 +12,26 @@ export const DrawerLogview = () => {
       <List>
       {gpsLogFeatures.map((feature, index) => {
         let timeText = ''
-        const start = feature.lineString[0].time || undefined
-        const end = feature.lineString[feature.lineString.length - 1].time || undefined
-        if(start && end) {
-          const startTimeDate = new Date(start)
-          const endTimeDate = new Date(end)
 
-          const startTimeDay = dayjs(startTimeDate)
-          const endTimeDay = dayjs(endTimeDate)
+        if (feature.lineString) {
+          const start = feature.lineString[0].time || undefined
+          const end = feature.lineString[feature.lineString.length - 1].time || undefined
 
-          const diffHour = Math.floor(endTimeDay.diff(startTimeDay) / 3600000)
-          const diffMin = Math.floor(Math.floor(endTimeDay.diff(startTimeDay) % 3600000) / 60000)
-          timeText = `${diffHour}時間${diffMin}分`
+          if(start && end) {
+            const startTimeDate = new Date(start * 1000)
+            const endTimeDate = new Date(end * 1000)
+
+            console.log(endTimeDate)
+
+            const startTimeDay = dayjs(startTimeDate)
+            const endTimeDay = dayjs(endTimeDate)
+
+            const diffHour = Math.floor(endTimeDay.diff(startTimeDay) / 3600000)
+            const diffMin = Math.floor(Math.floor(endTimeDay.diff(startTimeDay) % 3600000) / 60000)
+            timeText = `${diffHour}時間${diffMin}分`
+          }
         }
 
-        /**
-         *             {index}:{feature.name}<br />
-            {startTimeDay.format('YYYY-MM-DD HH:mm:ss')}<br />
-            {endTimeDay.format('YYYY-MM-DD HH:mm:ss')}<br />
-            {`${diffHour}時間${diffMin}分`}
-         */
         return (
           <ListItem
             secondaryAction={

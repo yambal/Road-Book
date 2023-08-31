@@ -14,7 +14,8 @@ export type LineString = {
 export type GpsFeature = {
   name: string
   geometryType: GometryType
-  lineString: LineString[]
+  lineString: LineString[] | undefined
+  coordinate: GpsCoordinate | undefined
 }
 
 export type GpsLog = {

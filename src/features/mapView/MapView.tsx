@@ -5,8 +5,8 @@ import { LatLngBoundsExpression, LatLngExpression } from 'leaflet'
 //import { useMap } from 'react-leaflet/hooks'
 
 import 'leaflet/dist/leaflet.css'
-import { useAppSelector } from '../../app/hooks'
 import { MapGpsLogView } from './MapGpsLogView'
+import { useGpsLogPolylines, useLineStringGpsLogFeatures } from '../../app/selectors.ts/selector'
 
 /**
  * @see https://react-leaflet.js.org/
@@ -20,24 +20,8 @@ export type MapViewProps = {
 export const MapView = ({
   centerPotision,
 }: MapViewProps) => {
-  const gpsLogFeatures = useAppSelector(state => state.gpsJson.features)
-  
-  const polyLine = React.useMemo(() => {
-    const lineStringLogFeatures = gpsLogFeatures.filter((f) => {
-      return f.geometryType === "LineString"
-    })
 
-    if (lineStringLogFeatures.length > 0) {
-      return lineStringLogFeatures[0].lineString.map(ls => {
-        const latlan: LatLngExpression = [
-          ls.coordinate.longitude,
-          ls.coordinate.latitude
-        ]
-        return latlan
-      })
-    }
-    return []
-  }, [gpsLogFeatures])
+  const polyLine = useGpsLogPolylines()[0]
 
   return (
     <MapContainer

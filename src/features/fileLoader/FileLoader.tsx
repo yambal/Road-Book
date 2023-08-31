@@ -25,42 +25,55 @@ export const FileLoader = () => {
           const name = properties?.name || 'un named'
           const type = properties?.type || undefined
 
-          
-
-          const times = coordinateProperties?.times || []
-
           const geometry = feature.geometry
           // const geometryType = geometry.type
           /* @ts-ignore */
           const coordinates = geometry.coordinates
           const geometryType = geometry.type
 
-          console.log(geometryType)
-          console.log(`${name}: ${geometryType} / ${type}`)
+          let gpsCoordinates: GpsCoordinate[] = []
+          let gpsTimes: number[] = []
+          let lineStrings: LineString[] | undefined = undefined
+          let gpsCoordinate: GpsCoordinate | undefined = undefined
+          if (geometryType === "LineString") {
+            /* @ts-ignore  */
+            gpsCoordinates = coordinates.map(coordinate => {
+              const gpsCoordinate: GpsCoordinate = {
+                latitude: coordinate[0],
+                longitude: coordinate[1],
+                altitude: coordinate[2]
+              }
+              return gpsCoordinate
+            })
 
-          /* @ts-ignore  */
-          const gpsCoordinates: GpsCoordinate[] = coordinates.map(coordinate => {
-            const gpsCoordinate: GpsCoordinate = {
-              latitude: coordinate[0],
-              longitude: coordinate[1],
-              altitude: coordinate[2]
-            }
-            return gpsCoordinate
-          })
+            const times: number[] = coordinateProperties?.times || []
+            gpsTimes = times.map((time) => {
+              return Math.floor(new Date(time).getTime() / 1000)
+            })
 
-          const lineStrings = gpsCoordinates.map((gpsCoordinate, index) => {
-            const lineString: LineString = {
-              coordinate: gpsCoordinate,
-              time: times[index] ? Math.floor(new Date(times[index]).getTime()) : undefined
+            lineStrings = gpsCoordinates.map((gpsCoordinate, index) => {
+              const lineString: LineString = {
+                coordinate: gpsCoordinate,
+                time: gpsTimes[index]
+              }
+              return lineString
+            })
+          } else {
+            gpsCoordinate = {
+              latitude: coordinates[0],
+              longitude: coordinates[1],
+              altitude: coordinates[2]
             }
-            return lineString
-          })
+          }
 
           const gpsFeature: GpsFeature = {
             name,
             geometryType,
-            lineString: lineStrings
+            lineString: lineStrings,
+            coordinate: gpsCoordinate
           }
+
+          console.log(`${name}: ${geometryType} / ${type}`, gpsFeature)
 
           return gpsFeature
         })
