@@ -1,11 +1,12 @@
 import React from 'react'
-import { MapContainer, Polyline } from 'react-leaflet'
+import { MapContainer, Polyline, useMap } from 'react-leaflet'
 import { TileLayer, LayersControl } from 'react-leaflet'
-import { LatLngExpression } from 'leaflet'
+import { LatLngBoundsExpression, LatLngExpression } from 'leaflet'
 //import { useMap } from 'react-leaflet/hooks'
 
 import 'leaflet/dist/leaflet.css'
 import { useAppSelector } from '../../app/hooks'
+import { MapGpsLogView } from './MapGpsLogView'
 
 /**
  * @see https://react-leaflet.js.org/
@@ -21,7 +22,35 @@ export const MapView = ({
 }: MapViewProps) => {
   const gpsLogFeatures = useAppSelector(state => state.gpsJson.features)
 
+  React.useEffect(() => {
+    if (gpsLogFeatures && gpsLogFeatures.length > 0) {
+      const gpsLogFeature = gpsLogFeatures[0]
+      let maxLat = 0, minLat = 180, maxLon = 0, minLon = 180
+      gpsLogFeature.lineString.forEach((ls) => {
+        const c = ls.coordinate
+        maxLat = c.latitude > maxLat ? c.latitude : maxLat
+        minLat = c.latitude < minLat ? c.latitude : minLat
+        maxLon = c.longitude > maxLon ? c.longitude : maxLon
+        minLon = c.longitude < minLon ? c.longitude : minLon
+      })
+
+      console.log(`${minLat} - ${maxLat}, ${minLon} - ${maxLon}`)
+
+      const bound:LatLngBoundsExpression = [
+        [50.505, -29.09],
+        [52.505, 29.09],
+      ]
+      // return setBounds(bound)
+      // map.fitBounds(bound)
+    }
+    // return setBounds(undefined)
+
+  },[gpsLogFeatures])
+
+
   const polyLine = React.useMemo(() => {
+    
+
     if (gpsLogFeatures && gpsLogFeatures.length > 0) {
       return gpsLogFeatures[0].lineString.map(ls => {
         const latlan: LatLngExpression = [
@@ -53,6 +82,7 @@ export const MapView = ({
         url="https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png"
       />
       <Polyline pathOptions={{color: 'red'}} positions={polyLine} />
+      <MapGpsLogView />
       <LayersControl position="topright">
         <LayersControl.Overlay name="Waze">
           <TileLayer
