@@ -4,15 +4,30 @@ import { MapView } from './features/mapView/MapView';
 import { Provider } from 'react-redux'
 import { store } from './app/store'
 import { Counter } from './features/counter/Counter';
+import { Layout } from './components/Layout';
+import { DrawerProvider } from './providers/DrawerProvider';
+import { GlobalStyles, ThemeProvider } from '@mui/material';
+import { theme } from './style/theme';
+import { normalize } from 'polished';
 
 function App() {
   return (
     <Provider store={store}>
-      <div className="App">
-        <FileLoader />
-        <MapView centerPotision={[35, 135]}/>
-        <Counter />
-      </div>
+      <GlobalStyles
+        styles={normalize()}
+      />
+      <ThemeProvider theme={theme}>
+        <DrawerProvider>
+          <Layout
+            drawerContents={<>Drawer</>}
+            drawerWidth={240}
+          >
+            <FileLoader />
+            <MapView centerPotision={[35, 135]}/>
+            <Counter />
+          </Layout>
+        </DrawerProvider>
+      </ThemeProvider>
     </Provider>
   );
 }
