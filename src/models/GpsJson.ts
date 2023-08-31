@@ -4,13 +4,16 @@ export type GpsCoordinate = {
   altitude: number
 }
 
+export type GometryType = "Point" | "MultiPoint" | "LineString" | "MultiLineString" | "Polygon" | "MultiPolygon" | "GeometryCollection"
+
 export type LineString = {
   coordinate: GpsCoordinate
-  time: string
+  time: number | undefined
 }
 
 export type GpsFeature = {
   name: string
+  geometryType: GometryType
   lineString: LineString[]
 }
 

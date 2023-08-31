@@ -1,14 +1,16 @@
 import React from 'react';
 import { FileLoader } from './features/fileLoader/FileLoader';
-import { MapView } from './features/mapView/MapView';
 import { Provider } from 'react-redux'
 import { store } from './app/store'
-import { Counter } from './features/counter/Counter';
 import { Layout } from './components/Layout';
 import { DrawerProvider } from './providers/DrawerProvider';
 import { GlobalStyles, ThemeProvider } from '@mui/material';
 import { theme } from './style/theme';
 import { normalize } from 'polished';
+import { Router } from './routers/Router';
+import { DrawerRouter } from './routers/DrawerRouider';
+
+
 
 function App() {
   return (
@@ -19,12 +21,10 @@ function App() {
       <ThemeProvider theme={theme}>
         <DrawerProvider>
           <Layout
-            drawerContents={<>Drawer</>}
+            drawerContents={<DrawerRouter />}
             drawerWidth={240}
           >
-            <FileLoader />
-            <MapView centerPotision={[35, 135]}/>
-            <Counter />
+            <Router />
           </Layout>
         </DrawerProvider>
       </ThemeProvider>

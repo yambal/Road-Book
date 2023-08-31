@@ -21,38 +21,14 @@ export const MapView = ({
   centerPotision,
 }: MapViewProps) => {
   const gpsLogFeatures = useAppSelector(state => state.gpsJson.features)
-
-  React.useEffect(() => {
-    if (gpsLogFeatures && gpsLogFeatures.length > 0) {
-      const gpsLogFeature = gpsLogFeatures[0]
-      let maxLat = 0, minLat = 180, maxLon = 0, minLon = 180
-      gpsLogFeature.lineString.forEach((ls) => {
-        const c = ls.coordinate
-        maxLat = c.latitude > maxLat ? c.latitude : maxLat
-        minLat = c.latitude < minLat ? c.latitude : minLat
-        maxLon = c.longitude > maxLon ? c.longitude : maxLon
-        minLon = c.longitude < minLon ? c.longitude : minLon
-      })
-
-      console.log(`${minLat} - ${maxLat}, ${minLon} - ${maxLon}`)
-
-      const bound:LatLngBoundsExpression = [
-        [50.505, -29.09],
-        [52.505, 29.09],
-      ]
-      // return setBounds(bound)
-      // map.fitBounds(bound)
-    }
-    // return setBounds(undefined)
-
-  },[gpsLogFeatures])
-
-
+  
   const polyLine = React.useMemo(() => {
-    
+    const lineStringLogFeatures = gpsLogFeatures.filter((f) => {
+      return f.geometryType === "LineString"
+    })
 
-    if (gpsLogFeatures && gpsLogFeatures.length > 0) {
-      return gpsLogFeatures[0].lineString.map(ls => {
+    if (lineStringLogFeatures.length > 0) {
+      return lineStringLogFeatures[0].lineString.map(ls => {
         const latlan: LatLngExpression = [
           ls.coordinate.longitude,
           ls.coordinate.latitude
