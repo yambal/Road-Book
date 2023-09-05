@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../../app/store'
 
-// Define a type for the slice state
 export interface GpsLogViewState {
   currentFeatureId: string | undefined
 }
@@ -23,7 +22,6 @@ export const gpsLogViewSlice = createSlice({
 
 export const { set } = gpsLogViewSlice.actions
 
-// Other code such as selectors can use the imported `RootState` type
 export const selectGpsLogView = (state: RootState) => state.gpsLogView
 
 export default gpsLogViewSlice.reducer
