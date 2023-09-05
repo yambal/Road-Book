@@ -1,12 +1,11 @@
 import React from 'react'
-import { MapContainer, Polyline, useMap } from 'react-leaflet'
+import { MapContainer } from 'react-leaflet'
 import { TileLayer, LayersControl } from 'react-leaflet'
-import { LatLngBoundsExpression, LatLngExpression } from 'leaflet'
+import { LatLngExpression } from 'leaflet'
 //import { useMap } from 'react-leaflet/hooks'
 
 import 'leaflet/dist/leaflet.css'
 import { MapGpsLogView } from './MapGpsLogView'
-import { useGpsLogPolylines, useLineStringGpsLogFeatures } from '../../app/selectors.ts/selector'
 
 /**
  * @see https://react-leaflet.js.org/
@@ -20,8 +19,6 @@ export type MapViewProps = {
 export const MapView = ({
   centerPotision,
 }: MapViewProps) => {
-
-  const polyLine = useGpsLogPolylines()[0]
 
   return (
     <MapContainer
@@ -41,7 +38,6 @@ export const MapView = ({
         attribution='<a href="https://maps.gsi.go.jp/development/ichiran.html">地理院タイル</a>'
         url="https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png"
       />
-      <Polyline pathOptions={{color: 'red'}} positions={polyLine} />
       <MapGpsLogView />
       <LayersControl position="topright">
         <LayersControl.Overlay name="Waze">

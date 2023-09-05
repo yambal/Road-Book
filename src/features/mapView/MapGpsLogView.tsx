@@ -1,11 +1,13 @@
 import React from 'react'
 import { LatLngBoundsExpression } from "leaflet"
-import { useMap } from "react-leaflet"
+import { Polyline, useMap } from "react-leaflet"
 import { useAppSelector } from "../../app/hooks"
+import { useGpsLogPolylines } from '../../app/selectors.ts/selector'
 
 
 export const MapGpsLogView = () => {
   const gpsLogFeatures = useAppSelector(state => state.gpsJson.features)
+  const polyLine = useGpsLogPolylines()[0]
 
   const map = useMap()
 
@@ -31,5 +33,7 @@ export const MapGpsLogView = () => {
     }
 
   },[gpsLogFeatures, map])
-  return (<></>)
+  return (<>
+    <Polyline pathOptions={{color: 'red'}} positions={polyLine} />
+  </>)
 }
