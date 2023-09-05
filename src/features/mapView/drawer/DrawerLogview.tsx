@@ -1,5 +1,5 @@
 import { List, Toolbar } from "@mui/material"
-import { useAppSelector } from '../../app/hooks'
+import { useAppSelector } from '../../../app/hooks'
 import { MapGpsLogListItem } from "./MapGpsLogListItem";
 
 export const DrawerLogview = () => {

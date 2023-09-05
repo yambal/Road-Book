@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Routes } from "react-router-dom";
-import { DrawerLogview } from '../features/mapView/DrawerLogview';
+import { DrawerLogview } from '../features/mapView/drawer/DrawerLogview';
 
 export const DrawerRouter = () => {
 

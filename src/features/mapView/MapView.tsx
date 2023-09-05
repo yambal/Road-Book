@@ -5,7 +5,7 @@ import { LatLngExpression } from 'leaflet'
 //import { useMap } from 'react-leaflet/hooks'
 
 import 'leaflet/dist/leaflet.css'
-import { MapGpsLogView } from './MapGpsLogView'
+import { GpsLogView } from './gpsLogView/GpsLogView'
 
 /**
  * @see https://react-leaflet.js.org/
@@ -38,7 +38,7 @@ export const MapView = ({
         attribution='<a href="https://maps.gsi.go.jp/development/ichiran.html">地理院タイル</a>'
         url="https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png"
       />
-      <MapGpsLogView />
+      <GpsLogView />
       <LayersControl position="topright">
         <LayersControl.Overlay name="Waze">
           <TileLayer

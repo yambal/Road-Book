@@ -35,7 +35,12 @@ export const FileLoader = () => {
           let gpsTimes: number[] = []
           let lineStrings: LineString[] | undefined = undefined
           let gpsCoordinate: GpsCoordinate | undefined = undefined
+
           if (geometryType === "LineString") {
+            /**
+             * latitude 緯度 / 北緯
+             * longitude 経度 / 東経
+             */
             /* @ts-ignore  */
             gpsCoordinates = coordinates.map(coordinate => {
               const gpsCoordinate: GpsCoordinate = {
@@ -64,6 +69,7 @@ export const FileLoader = () => {
               longitude: coordinates[1],
               altitude: coordinates[2]
             }
+            console.log("gpsCoordinate", gpsCoordinate)
           }
 
           const gpsFeature: GpsFeature = {
