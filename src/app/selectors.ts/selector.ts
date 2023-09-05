@@ -36,3 +36,13 @@ export const useGpsLogPolylines = () => {
   }
   return []
 }
+
+/**
+ * 
+ */
+
+export const useGpsLogView = () => useAppSelector(state => state.gpsLogView)
+export const useGpsLogViewCurrentFeatureId = () => {
+  const gpsLogFeatures = useGpsLogView()
+  return gpsLogFeatures.currentFeatureId
+}

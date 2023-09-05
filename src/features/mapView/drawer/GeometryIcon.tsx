@@ -1,5 +1,5 @@
 import React from 'react'
-import { GometryType } from "../../models/GpsJson"
+import { GometryType } from "../../../models/GpsJson"
 import Timeline from '@mui/icons-material/Timeline'
 import Place from '@mui/icons-material/Place';
 

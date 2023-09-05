@@ -2,10 +2,10 @@ import React from 'react'
 import { MapContainer } from 'react-leaflet'
 import { TileLayer, LayersControl } from 'react-leaflet'
 import { LatLngExpression } from 'leaflet'
-//import { useMap } from 'react-leaflet/hooks'
 
 import 'leaflet/dist/leaflet.css'
 import { GpsLogView } from './gpsLogView/GpsLogView'
+import { useGpsLogViewCurrentFeatureId } from '../../app/selectors.ts/selector'
 
 /**
  * @see https://react-leaflet.js.org/
@@ -20,7 +20,10 @@ export const MapView = ({
   centerPotision,
 }: MapViewProps) => {
 
+  const id = useGpsLogViewCurrentFeatureId()
+
   return (
+    <>
     <MapContainer
       center={centerPotision}
       zoom={13}
@@ -60,5 +63,7 @@ export const MapView = ({
         </LayersControl.Overlay>
       </LayersControl>
     </MapContainer>
+    {id}
+    </>
   )
 }

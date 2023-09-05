@@ -13,6 +13,7 @@ export type LineString = {
 
 export type GpsFeature = {
   name: string
+  id: string
   geometryType: GometryType
   lineString: LineString[] | undefined
   coordinate: GpsCoordinate | undefined

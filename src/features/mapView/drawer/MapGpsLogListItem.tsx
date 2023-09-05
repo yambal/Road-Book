@@ -1,15 +1,19 @@
 import React from 'react'
-import { GpsFeature } from "../../models/GpsJson"
+import { GpsFeature } from "../../../models/GpsJson"
 import { Avatar, IconButton, ListItem, ListItemAvatar, ListItemText} from "@mui/material"
 import dayjs from 'dayjs'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { GeometryIcon } from './GeometryIcon'
 
 export type MapGpsLogListItemProps = {
-  gpsFeature: GpsFeature
+  gpsFeature: GpsFeature,
+  onClick: (featureId: string | undefined) => void
 }
 
-export const MapGpsLogListItem = ({gpsFeature}: MapGpsLogListItemProps) => {
+export const MapGpsLogListItem = ({
+  gpsFeature,
+  onClick
+}: MapGpsLogListItemProps) => {
   const timeText = React.useMemo(() => {
     let text = ''
     if (gpsFeature.lineString) {
@@ -28,6 +32,12 @@ export const MapGpsLogListItem = ({gpsFeature}: MapGpsLogListItemProps) => {
     return text
   }, [gpsFeature])
 
+  const handleListItemClick = React.useCallback((event: React.MouseEvent<HTMLLIElement>) => {
+    const li = event.currentTarget
+    const id = li.dataset.id
+    onClick(id)
+  }, [onClick])
+
   return (
     <ListItem
       secondaryAction={
@@ -35,6 +45,8 @@ export const MapGpsLogListItem = ({gpsFeature}: MapGpsLogListItemProps) => {
           <DeleteIcon />
         </IconButton>
       }
+      onClick={handleListItemClick}
+      data-id={gpsFeature.id}
     >
       <ListItemAvatar>
         <Avatar>

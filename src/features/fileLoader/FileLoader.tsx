@@ -1,9 +1,11 @@
 import React from 'react'
 import { gpxToGeoJson } from './gpxToGeoJson';
 import { GpsCoordinate, GpsFeature, GpsLog, LineString } from '../../models/GpsJson';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { set } from './GpsJsonSlice'
-import { useNavigate } from 'react-router';
+import { useAppDispatch } from '../../app/hooks';
+import { set as setGpsJson } from './GpsJsonSlice'
+import { set as setCurrentFeatureId } from '../mapView/gpsLogViewSlice'
+import { useNavigate } from 'react-router'
+import { v4 as uuidv4 } from 'uuid';
 
 export const FileLoader = () => {
   const dispatch = useAppDispatch()
@@ -72,8 +74,11 @@ export const FileLoader = () => {
             console.log("gpsCoordinate", gpsCoordinate)
           }
 
+          const id = uuidv4()
+
           const gpsFeature: GpsFeature = {
             name,
+            id,
             geometryType,
             lineString: lineStrings,
             coordinate: gpsCoordinate
@@ -87,7 +92,8 @@ export const FileLoader = () => {
         const gpsLog: GpsLog = {
           features: gpsFeartures
         }
-        dispatch(set(gpsLog))
+        dispatch(setGpsJson(gpsLog))
+        dispatch(setCurrentFeatureId(gpsLog.features[0].id))
 
         console.log(gpsLog)
 
