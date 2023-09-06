@@ -3,9 +3,13 @@ import { Marker } from "react-leaflet"
 
 export type PointMakerProps = {
   latLang: LatLngExpression
+  opacity?: number
 }
 
-export const PointMaker = ({ latLang }: PointMakerProps) => {
+export const PointMaker = ({
+  latLang,
+  opacity = 1
+}: PointMakerProps) => {
 
   Icon.Default.mergeOptions({
     iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
@@ -14,6 +18,6 @@ export const PointMaker = ({ latLang }: PointMakerProps) => {
   });
 
   return (
-    <Marker position={latLang}/>
+    <Marker position={latLang} opacity={opacity}/>
   )
 }

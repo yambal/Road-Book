@@ -23,11 +23,12 @@ export const useGpsLogPolylines = () => {
   if (lineStringGpsLogFeatures.length > 0) {
     return lineStringGpsLogFeatures.map((f) => {
       if (f.lineString) {
-        return f.lineString.map(ls => {
-          const latlan: LatLngExpression = [ 
-            ls.coordinate.longitude,
-            ls.coordinate.latitude,
-          ]
+        return  f.lineString.map(ls => {
+          const latlan: LatLngExpression = {
+            lng : ls.coordinate.longitude,
+            lat: ls.coordinate.latitude,
+          }
+          
           return latlan
         })
       }
@@ -45,4 +46,12 @@ export const useGpsLogView = () => useAppSelector(state => state.gpsLogView)
 export const useGpsLogViewCurrentFeatureId = () => {
   const gpsLogFeatures = useGpsLogView()
   return gpsLogFeatures.currentFeatureId
+}
+
+export const useGpsLogViewCurrentFeature = () => {
+  const gpsLogViewCurrentFeatureId = useGpsLogViewCurrentFeatureId()
+  const gpsLogFeatures = useGpsLogFeatures()
+  return gpsLogFeatures.find((gpsLogFeature) => {
+    return gpsLogFeature.id === gpsLogViewCurrentFeatureId
+  })
 }

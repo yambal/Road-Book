@@ -1,22 +1,23 @@
 import { LatLngExpression } from "leaflet"
-import { usePointGpsLogFeatures } from "../../../../app/selectors.ts/selector"
+import { useGpsLogViewCurrentFeatureId, usePointGpsLogFeatures } from "../../../../app/selectors.ts/selector"
 import { PointMaker } from "./PointMaker"
 
 
 export const PointsView = () => {
   const pointFeature = usePointGpsLogFeatures()
+  const gpsLogViewCurrentFeatureId = useGpsLogViewCurrentFeatureId()
   return (
     <>
       {
         pointFeature.map((f) => {
+          const isCurrent = f.id === gpsLogViewCurrentFeatureId
           if (f.coordinate) {
             const p:LatLngExpression = {
-              lng:f.coordinate?.latitude,
-              lat:f.coordinate.longitude
+              lng:f.coordinate.longitude,
+              lat:f.coordinate?.latitude
             }
-            console.log(p)
             return (
-              <PointMaker latLang={p} />
+              <PointMaker latLang={p} opacity={isCurrent ? 1 : 0.5}/>
             )
           }
           return undefined

@@ -46,8 +46,8 @@ export const FileLoader = () => {
             /* @ts-ignore  */
             gpsCoordinates = coordinates.map(coordinate => {
               const gpsCoordinate: GpsCoordinate = {
-                latitude: coordinate[0],
-                longitude: coordinate[1],
+                longitude: coordinate[0],
+                latitude: coordinate[1],
                 altitude: coordinate[2]
               }
               return gpsCoordinate
@@ -67,8 +67,8 @@ export const FileLoader = () => {
             })
           } else {
             gpsCoordinate = {
-              latitude: coordinates[0],
-              longitude: coordinates[1],
+              longitude: coordinates[0],
+              latitude: coordinates[1],
               altitude: coordinates[2]
             }
             console.log("gpsCoordinate", gpsCoordinate)

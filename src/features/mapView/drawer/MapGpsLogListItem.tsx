@@ -1,17 +1,19 @@
 import React from 'react'
 import { GpsFeature } from "../../../models/GpsJson"
-import { Avatar, IconButton, ListItem, ListItemAvatar, ListItemText} from "@mui/material"
+import { Avatar, IconButton, ListItem, ListItemAvatar, ListItemButton, ListItemText} from "@mui/material"
 import dayjs from 'dayjs'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { GeometryIcon } from './GeometryIcon'
 
 export type MapGpsLogListItemProps = {
   gpsFeature: GpsFeature,
+  selected: boolean | undefined
   onClick: (featureId: string | undefined) => void
 }
 
 export const MapGpsLogListItem = ({
   gpsFeature,
+  selected = false,
   onClick
 }: MapGpsLogListItemProps) => {
   const timeText = React.useMemo(() => {
@@ -32,7 +34,7 @@ export const MapGpsLogListItem = ({
     return text
   }, [gpsFeature])
 
-  const handleListItemClick = React.useCallback((event: React.MouseEvent<HTMLLIElement>) => {
+  const handleListItemClick = React.useCallback((event: React.MouseEvent<HTMLDivElement>) => {
     const li = event.currentTarget
     const id = li.dataset.id
     onClick(id)
@@ -45,15 +47,17 @@ export const MapGpsLogListItem = ({
           <DeleteIcon />
         </IconButton>
       }
-      onClick={handleListItemClick}
-      data-id={gpsFeature.id}
+      selected={selected}
+      disablePadding
     >
-      <ListItemAvatar>
-        <Avatar>
-          <GeometryIcon geometryType={gpsFeature.geometryType}/>
-        </Avatar>
-      </ListItemAvatar>
-      <ListItemText primary={gpsFeature.name} secondary={`${gpsFeature.geometryType}: ${timeText}`} />
+      <ListItemButton data-id={gpsFeature.id} onClick={handleListItemClick}>
+        <ListItemAvatar>
+          <Avatar>
+            <GeometryIcon geometryType={gpsFeature.geometryType}/>
+          </Avatar>
+        </ListItemAvatar>
+        <ListItemText primary={gpsFeature.name} secondary={`${gpsFeature.geometryType}: ${timeText}`} />
+      </ListItemButton>
     </ListItem>
   )
 }
