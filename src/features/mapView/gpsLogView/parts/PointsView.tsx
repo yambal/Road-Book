@@ -17,7 +17,7 @@ export const PointsView = () => {
               lat:f.coordinate?.latitude
             }
             return (
-              <PointMaker latLang={p} opacity={isCurrent ? 1 : 0.5}/>
+              <PointMaker latLang={p} opacity={isCurrent ? 1 : 0.25}/>
             )
           }
           return undefined

@@ -15,18 +15,23 @@ export const GpsLogView = () => {
     if (gpsLogViewCurrentFeature) {
       if (gpsLogViewCurrentFeature.geometryType === "LineString") {
         if (gpsLogViewCurrentFeature.lineString) {
-          let maxLat = 0, minLat = 180, maxLon = 0, minLon = 180
+
+          let maxLat = 0, minLat = 180, maxLon = 0, minLon = 360
           gpsLogViewCurrentFeature.lineString.forEach((ls) => {
             const c = ls.coordinate
-            maxLat = c.latitude > maxLat ? c.latitude : maxLat
-            minLat = c.latitude < minLat ? c.latitude : minLat
-            maxLon = c.longitude > maxLon ? c.longitude : maxLon
-            minLon = c.longitude < minLon ? c.longitude : minLon
+            maxLat = c.latitude + 90 > maxLat ? c.latitude + 90 : maxLat
+            minLat = c.latitude + 90 < minLat ? c.latitude + 90 : minLat
+            maxLon = c.longitude + 180 > maxLon ? c.longitude + 180 : maxLon
+            minLon = c.longitude + 180 < minLon ? c.longitude + 180 : minLon
           })
+
           const bound:LatLngBoundsExpression = [
-            [minLon, minLat],
-            [maxLon, maxLat],
+            [minLat - 90, minLon - 180 ],
+            [maxLat - 90, maxLon - 180 ],
           ]
+
+          console.log(bound)
+
           map.fitBounds(bound)
         }
       } else {
