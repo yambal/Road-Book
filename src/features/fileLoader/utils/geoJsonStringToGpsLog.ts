@@ -9,21 +9,27 @@ export const geoJsonStringToGpsLog = (geoJsonText: string) => {
   console.log(geoJson)
 
   const gpsFeartures = geoJson.features.map((feature) => {
-    const properties = feature.properties
-    const coordinateProperties = properties?.coordinateProperties || undefined
-    const name = properties?.name || 'un named'
-    const propertyType = String(properties?.type) || undefined
+    const {
+      coordinateProperties = undefined,
+      name = "un named",
+      desc = undefined,
+      type:propertyType = undefined
+    } = feature.properties || {}
 
-    const geometry = feature.geometry
-    // const geometryType = geometry.type
-    /* @ts-ignore */
-    const coordinates = geometry.coordinates
-    const geometryType = geometry.type
+    const {
+      times: coordinatePropertyTimes = []
+    } = coordinateProperties
+
+    const {
+      /* @ts-ignore */
+      coordinates = [],
+      type: geometryType,
+    } = feature.geometry || []
 
     let gpsCoordinates: LatLng[] = []
     let gpsTimes: number[] = []
-    let lineStrings: PolylineCoordunate[] | undefined = undefined
-    let gpsCoordinate: LatLng | undefined = undefined
+    let polylineCoordinates: PolylineCoordunate[] | undefined
+    let gpsCoordinate: LatLng | undefined
 
     if (geometryType === "LineString") {
       /**
@@ -35,17 +41,17 @@ export const geoJsonStringToGpsLog = (geoJsonText: string) => {
         return latLng(coordinate[1], coordinate[0], coordinate[2])
       })
 
-      const times: number[] = coordinateProperties?.times || []
+      const times: number[] = coordinatePropertyTimes
       gpsTimes = times.map((time) => {
         return Math.floor(new Date(time).getTime() / 1000)
       })
 
-      lineStrings = gpsCoordinates.map((gpsCoordinate, index) => {
-        const lineString: PolylineCoordunate = {
+      polylineCoordinates = gpsCoordinates.map((gpsCoordinate, index) => {
+        const polylineCoordunate: PolylineCoordunate = {
           coordinate: gpsCoordinate,
           time: gpsTimes[index]
         }
-        return lineString
+        return polylineCoordunate
       })
     } else {
       gpsCoordinate = latLng(coordinates[1], coordinates[0], coordinates[2])
@@ -55,10 +61,11 @@ export const geoJsonStringToGpsLog = (geoJsonText: string) => {
 
     const gpsFeature: GpsLogFeature = {
       name,
+      desc,
       id,
       propertyType,
       geometryType,
-      polylineCoordinates: lineStrings,
+      polylineCoordinates,
       coordinate: gpsCoordinate
     }
     return gpsFeature

@@ -58,7 +58,7 @@ export const MapGpsLogListItem = ({
         </ListItemAvatar>
         <ListItemText
           primary={gpsFeature.name}
-          secondary={`${gpsFeature.geometryType}/${gpsFeature.propertyType}: ${timeText}`}
+          secondary={`${gpsFeature.desc}: ${timeText}`}
         />
       </ListItemButton>
     </ListItem>

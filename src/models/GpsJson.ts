@@ -9,6 +9,7 @@ export type PolylineCoordunate = {
 
 export type GpsLogFeature = {
   name: string
+  desc: string | undefined
   id: string
   propertyType: string | undefined
   geometryType: GometryType
