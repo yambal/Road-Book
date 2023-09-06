@@ -1,7 +1,6 @@
 import { Polyline } from "react-leaflet"
 import { useGpsLogPolylines } from "../../../../app/selectors.ts/selector"
 
-
 export const PolylinesView = () => {
   const polyLines = useGpsLogPolylines()
 

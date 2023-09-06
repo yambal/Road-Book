@@ -19,10 +19,10 @@ export const GpsLogView = () => {
           let maxLat = 0, minLat = 180, maxLon = 0, minLon = 360
           gpsLogViewCurrentFeature.lineString.forEach((ls) => {
             const c = ls.coordinate
-            maxLat = c.latitude + 90 > maxLat ? c.latitude + 90 : maxLat
-            minLat = c.latitude + 90 < minLat ? c.latitude + 90 : minLat
-            maxLon = c.longitude + 180 > maxLon ? c.longitude + 180 : maxLon
-            minLon = c.longitude + 180 < minLon ? c.longitude + 180 : minLon
+            maxLat = c.lat + 90 > maxLat ? c.lat + 90 : maxLat
+            minLat = c.lat + 90 < minLat ? c.lat + 90 : minLat
+            maxLon = c.lng + 180 > maxLon ? c.lng + 180 : maxLon
+            minLon = c.lng + 180 < minLon ? c.lng + 180 : minLon
           })
 
           const bound:LatLngBoundsExpression = [
@@ -36,11 +36,7 @@ export const GpsLogView = () => {
         }
       } else {
         if (gpsLogViewCurrentFeature.coordinate) {
-          const to: LatLngExpression = [
-            gpsLogViewCurrentFeature.coordinate.latitude,
-            gpsLogViewCurrentFeature.coordinate.longitude
-          ]
-          map.panTo(to)
+          map.panTo(gpsLogViewCurrentFeature.coordinate)
         }
       }
     }

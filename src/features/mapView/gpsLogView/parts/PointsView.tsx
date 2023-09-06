@@ -12,12 +12,8 @@ export const PointsView = () => {
         pointFeature.map((f) => {
           const isCurrent = f.id === gpsLogViewCurrentFeatureId
           if (f.coordinate) {
-            const p:LatLngExpression = {
-              lng:f.coordinate.longitude,
-              lat:f.coordinate?.latitude
-            }
             return (
-              <PointMaker latLang={p} opacity={isCurrent ? 1 : 0.25}/>
+              <PointMaker latLang={f.coordinate} opacity={isCurrent ? 1 : 0.25}/>
             )
           }
           return undefined

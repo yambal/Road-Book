@@ -1,11 +1,12 @@
 import React from 'react'
 import { gpxToGeoJson } from './gpxToGeoJson';
-import { GpsCoordinate, GpsFeature, GpsLog, LineString } from '../../models/GpsJson';
+import { GpsFeature, GpsLog, LineString } from '../../models/GpsJson';
 import { useAppDispatch } from '../../app/hooks';
 import { set as setGpsJson } from './GpsJsonSlice'
 import { set as setCurrentFeatureId } from '../mapView/gpsLogViewSlice'
 import { useNavigate } from 'react-router'
 import { v4 as uuidv4 } from 'uuid';
+import { LatLng, latLng } from 'leaflet';
 
 export const FileLoader = () => {
   const dispatch = useAppDispatch()
@@ -33,10 +34,10 @@ export const FileLoader = () => {
           const coordinates = geometry.coordinates
           const geometryType = geometry.type
 
-          let gpsCoordinates: GpsCoordinate[] = []
+          let gpsCoordinates: LatLng[] = []
           let gpsTimes: number[] = []
           let lineStrings: LineString[] | undefined = undefined
-          let gpsCoordinate: GpsCoordinate | undefined = undefined
+          let gpsCoordinate: LatLng | undefined = undefined
 
           if (geometryType === "LineString") {
             /**
@@ -45,12 +46,7 @@ export const FileLoader = () => {
              */
             /* @ts-ignore  */
             gpsCoordinates = coordinates.map(coordinate => {
-              const gpsCoordinate: GpsCoordinate = {
-                longitude: coordinate[0],
-                latitude: coordinate[1],
-                altitude: coordinate[2]
-              }
-              return gpsCoordinate
+              return latLng(coordinate[1], coordinate[0], coordinate[2])
             })
 
             const times: number[] = coordinateProperties?.times || []
@@ -66,11 +62,7 @@ export const FileLoader = () => {
               return lineString
             })
           } else {
-            gpsCoordinate = {
-              longitude: coordinates[0],
-              latitude: coordinates[1],
-              altitude: coordinates[2]
-            }
+            gpsCoordinate = latLng(coordinates[1], coordinates[0], coordinates[2])
             console.log("gpsCoordinate", gpsCoordinate)
           }
 

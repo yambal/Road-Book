@@ -24,12 +24,11 @@ export const useGpsLogPolylines = () => {
     return lineStringGpsLogFeatures.map((f) => {
       if (f.lineString) {
         return  f.lineString.map(ls => {
-          const latlan: LatLngExpression = {
-            lng : ls.coordinate.longitude,
-            lat: ls.coordinate.latitude,
+          const lle: LatLngExpression = {
+            lat: ls.coordinate.lat,
+            lng: ls.coordinate.lng
           }
-          
-          return latlan
+          return lle
         })
       }
       return []

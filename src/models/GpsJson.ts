@@ -1,13 +1,9 @@
-export type GpsCoordinate = {
-  latitude: number
-  longitude: number
-  altitude: number
-}
+import { LatLng } from "leaflet"
 
 export type GometryType = "Point" | "MultiPoint" | "LineString" | "MultiLineString" | "Polygon" | "MultiPolygon" | "GeometryCollection"
 
 export type LineString = {
-  coordinate: GpsCoordinate
+  coordinate: LatLng
   time: number | undefined
 }
 
@@ -16,7 +12,7 @@ export type GpsFeature = {
   id: string
   geometryType: GometryType
   lineString: LineString[] | undefined
-  coordinate: GpsCoordinate | undefined
+  coordinate: LatLng | undefined
 }
 
 export type GpsLog = {
