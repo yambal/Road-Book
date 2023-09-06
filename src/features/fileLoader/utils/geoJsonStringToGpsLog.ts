@@ -6,11 +6,13 @@ import { v4 as uuidv4 } from 'uuid';
 export const geoJsonStringToGpsLog = (geoJsonText: string) => {
   const geoJson = gpxStringToGeoJson(String(geoJsonText))
 
+  console.log(geoJson)
+
   const gpsFeartures = geoJson.features.map((feature) => {
     const properties = feature.properties
     const coordinateProperties = properties?.coordinateProperties || undefined
     const name = properties?.name || 'un named'
-    const type = properties?.type || undefined
+    const propertyType = String(properties?.type) || undefined
 
     const geometry = feature.geometry
     // const geometryType = geometry.type
@@ -54,6 +56,7 @@ export const geoJsonStringToGpsLog = (geoJsonText: string) => {
     const gpsFeature: GpsLogFeature = {
       name,
       id,
+      propertyType,
       geometryType,
       polylineCoordinates: lineStrings,
       coordinate: gpsCoordinate
