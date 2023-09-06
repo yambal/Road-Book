@@ -28,9 +28,6 @@ export const GpsLogView = () => {
             [minLat - 90, minLon - 180 ],
             [maxLat - 90, maxLon - 180 ],
           ]
-
-          console.log(bound)
-
           map.fitBounds(bound)
         }
       } else {

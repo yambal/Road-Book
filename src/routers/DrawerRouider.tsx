@@ -8,7 +8,6 @@ export const DrawerRouter = () => {
   return (
     <Routes>
       <Route path="/logView" element={<DrawerLogview />} />
-
     </Routes>
   )
 }

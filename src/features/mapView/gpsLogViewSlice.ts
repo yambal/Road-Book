@@ -14,7 +14,6 @@ export const gpsLogViewSlice = createSlice({
   initialState,
   reducers: {
     set: (state, action: PayloadAction<string | undefined>) => {
-      console.log('set', action)
       state.currentFeatureId = action.payload
     }
   }
