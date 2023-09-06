@@ -22,8 +22,8 @@ export const useGpsLogPolylines = () => {
 
   if (lineStringGpsLogFeatures.length > 0) {
     return lineStringGpsLogFeatures.map((f) => {
-      if (f.lineString) {
-        return  f.lineString.map(ls => {
+      if (f.polylineCoordinates) {
+        return  f.polylineCoordinates.map(ls => {
           const lle: LatLngExpression = {
             lat: ls.coordinate.lat,
             lng: ls.coordinate.lng

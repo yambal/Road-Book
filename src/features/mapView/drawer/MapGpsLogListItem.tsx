@@ -1,12 +1,12 @@
 import React from 'react'
-import { GpsFeature } from "../../../models/GpsJson"
+import { GpsLogFeature } from "../../../models/GpsJson"
 import { Avatar, IconButton, ListItem, ListItemAvatar, ListItemButton, ListItemText} from "@mui/material"
 import dayjs from 'dayjs'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { GeometryIcon } from './GeometryIcon'
 
 export type MapGpsLogListItemProps = {
-  gpsFeature: GpsFeature,
+  gpsFeature: GpsLogFeature,
   selected: boolean | undefined
   onClick: (featureId: string | undefined) => void
 }
@@ -18,9 +18,9 @@ export const MapGpsLogListItem = ({
 }: MapGpsLogListItemProps) => {
   const timeText = React.useMemo(() => {
     let text = ''
-    if (gpsFeature.lineString) {
-      const start = gpsFeature.lineString[0].time || undefined
-      const end = gpsFeature.lineString[gpsFeature.lineString.length - 1].time || undefined
+    if (gpsFeature.polylineCoordinates) {
+      const start = gpsFeature.polylineCoordinates[0].time || undefined
+      const end = gpsFeature.polylineCoordinates[gpsFeature.polylineCoordinates.length - 1].time || undefined
       if(start && end) {
         const startTimeDate = new Date(start * 1000)
         const endTimeDate = new Date(end * 1000)

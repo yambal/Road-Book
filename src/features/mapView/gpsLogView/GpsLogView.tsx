@@ -1,5 +1,5 @@
 import React from 'react'
-import { LatLngBoundsExpression, LatLngExpression } from "leaflet"
+import { LatLngBoundsExpression } from "leaflet"
 import { useMap } from "react-leaflet"
 import { PointsView } from './parts/PointsView'
 import { PolylinesView } from './parts/PolylinesView'
@@ -14,10 +14,9 @@ export const GpsLogView = () => {
   React.useEffect(() => {
     if (gpsLogViewCurrentFeature) {
       if (gpsLogViewCurrentFeature.geometryType === "LineString") {
-        if (gpsLogViewCurrentFeature.lineString) {
-
+        if (gpsLogViewCurrentFeature.polylineCoordinates) {
           let maxLat = 0, minLat = 180, maxLon = 0, minLon = 360
-          gpsLogViewCurrentFeature.lineString.forEach((ls) => {
+          gpsLogViewCurrentFeature.polylineCoordinates.forEach((ls) => {
             const c = ls.coordinate
             maxLat = c.lat + 90 > maxLat ? c.lat + 90 : maxLat
             minLat = c.lat + 90 < minLat ? c.lat + 90 : minLat

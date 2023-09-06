@@ -1,6 +1,6 @@
 import React from 'react'
 import { gpxToGeoJson } from './gpxToGeoJson';
-import { GpsFeature, GpsLog, LineString } from '../../models/GpsJson';
+import { GpsLogFeature, GpsLog, PolylineCoordunate } from '../../models/GpsJson';
 import { useAppDispatch } from '../../app/hooks';
 import { set as setGpsJson } from './GpsJsonSlice'
 import { set as setCurrentFeatureId } from '../mapView/gpsLogViewSlice'
@@ -20,8 +20,6 @@ export const FileLoader = () => {
       reader.onload = () => {
         const readedText = reader.result
         const geoJson = gpxToGeoJson(String(readedText))
-        console.log(geoJson)
-
         const gpsFeartures = geoJson.features.map((feature) => {
           const properties = feature.properties
           const coordinateProperties = properties?.coordinateProperties || undefined
@@ -36,7 +34,7 @@ export const FileLoader = () => {
 
           let gpsCoordinates: LatLng[] = []
           let gpsTimes: number[] = []
-          let lineStrings: LineString[] | undefined = undefined
+          let lineStrings: PolylineCoordunate[] | undefined = undefined
           let gpsCoordinate: LatLng | undefined = undefined
 
           if (geometryType === "LineString") {
@@ -55,7 +53,7 @@ export const FileLoader = () => {
             })
 
             lineStrings = gpsCoordinates.map((gpsCoordinate, index) => {
-              const lineString: LineString = {
+              const lineString: PolylineCoordunate = {
                 coordinate: gpsCoordinate,
                 time: gpsTimes[index]
               }
@@ -68,11 +66,11 @@ export const FileLoader = () => {
 
           const id = uuidv4()
 
-          const gpsFeature: GpsFeature = {
+          const gpsFeature: GpsLogFeature = {
             name,
             id,
             geometryType,
-            lineString: lineStrings,
+            polylineCoordinates: lineStrings,
             coordinate: gpsCoordinate
           }
 

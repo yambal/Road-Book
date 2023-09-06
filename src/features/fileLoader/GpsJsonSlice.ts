@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../../app/store'
-import { GpsFeature, GpsLog } from '../../models/GpsJson'
+import { GpsLogFeature, GpsLog } from '../../models/GpsJson'
 
 // Define a type for the slice state
 export interface GpsJsonState {
-  features: GpsFeature[]
+  features: GpsLogFeature[]
 }
 
 // Define the initial state using that type
