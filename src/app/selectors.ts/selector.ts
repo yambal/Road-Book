@@ -1,7 +1,7 @@
 import { LatLngExpression } from "leaflet";
 import { useAppSelector } from "../hooks";
 
-export const useGpsLogFeatures = () => useAppSelector(state => state.gpsJson.features)
+export const useGpsLogFeatures = () => useAppSelector(state => state.gpsLog.features)
 
 export const useLineStringGpsLogFeatures = () => {
   const gpsLogFeatures = useGpsLogFeatures()

@@ -8,7 +8,7 @@ import { set } from '../gpsLogViewSlice'
 import { useGpsLogViewCurrentFeatureId } from '../../../app/selectors.ts/selector'
 
 export const DrawerLogview = () => {
-  const gpsLogFeatures = useAppSelector(state => state.gpsJson.features)
+  const gpsLogFeatures = useAppSelector(state => state.gpsLog.features)
   const dispatch = useAppDispatch()
   const gpsLogViewCurrentFeatureId = useGpsLogViewCurrentFeatureId()
 

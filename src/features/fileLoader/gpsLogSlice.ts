@@ -3,17 +3,17 @@ import type { RootState } from '../../app/store'
 import { GpsLogFeature, GpsLog } from '../../models/GpsJson'
 
 // Define a type for the slice state
-export interface GpsJsonState {
+export interface GpsLogState {
   features: GpsLogFeature[]
 }
 
 // Define the initial state using that type
-const initialState: GpsJsonState = {
+const initialState: GpsLogState = {
   features: []
 }
 
-export const gpsJsonSlice = createSlice({
-  name: 'gpsJson',
+export const gpsLogSlice = createSlice({
+  name: 'gpsLog',
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
@@ -24,9 +24,9 @@ export const gpsJsonSlice = createSlice({
   }
 })
 
-export const { set } = gpsJsonSlice.actions
+export const { set } = gpsLogSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectCount = (state: RootState) => state.counter.value
 
-export default gpsJsonSlice.reducer
+export default gpsLogSlice.reducer
