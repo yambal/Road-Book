@@ -10,6 +10,16 @@ import { Router } from './routers/Router';
 import { DrawerRouter } from './routers/DrawerRouider';
 
 const globalCss = css(normalize(), {
+  html: {
+    height: '100%'
+  },
+  body: {
+    height: '100%',
+    overflow: 'hidden'
+  },
+  "#root": {
+    height: '100%'
+  },
   iframe: {
     display: 'none'
   }

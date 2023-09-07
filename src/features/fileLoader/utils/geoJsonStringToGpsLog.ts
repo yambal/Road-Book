@@ -18,7 +18,7 @@ export const geoJsonStringToGpsLog = (geoJsonText: string) => {
 
     const {
       times: coordinatePropertyTimes = []
-    } = coordinateProperties
+    } = coordinateProperties || {}
 
     const {
       /* @ts-ignore */

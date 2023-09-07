@@ -29,7 +29,10 @@ export const Layout = ({
   const { isOpen, toggle, close } = useDrawer()
 
   return (
-      <Box sx={{ display: 'flex'}}>
+      <Box sx={{
+        display: 'flex',
+        height: '100%'
+      }}>
         <Header
           drawerWidth={drawerWidth}
           onMenuClick={toggle}
@@ -76,12 +79,18 @@ export const Layout = ({
           sx={{
             flexGrow: 1,
             // p: 3,
-            width: { sm: `calc(100% - ${drawerWidth}px)` }
-
+            width: { sm: `calc(100% - ${drawerWidth}px)` },
+            maxHeight: '100%',
+            display: 'flex',
+            flexDirection: 'column'
           }}
         >
           <Toolbar />
-          {children}
+          <div style={{
+            flexGrow: 1
+          }}>
+            {children}
+          </div>
         </Box>
       </Box>
   )
