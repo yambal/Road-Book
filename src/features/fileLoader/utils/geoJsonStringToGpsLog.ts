@@ -1,7 +1,7 @@
 import { gpxStringToGeoJson } from "./gpxStringToGeoJson"
-import { GpsLogFeature, GpsLog, PolylineCoordunate } from '../../../models/GpsJson'
-import { LatLng, latLng } from "leaflet"
+import { GpsLogFeature, GpsLog, PolylineCoordunate, GpsLogLatLng } from '../../../models/GpsJson'
 import { v4 as uuidv4 } from 'uuid';
+import { gpsLogLatLngFromNum } from "./latLng";
 
 export const geoJsonStringToGpsLog = (geoJsonText: string) => {
   const geoJson = gpxStringToGeoJson(String(geoJsonText))
@@ -26,10 +26,10 @@ export const geoJsonStringToGpsLog = (geoJsonText: string) => {
       type: geometryType,
     } = feature.geometry || []
 
-    let gpsCoordinates: LatLng[] = []
+    let gpsCoordinates: GpsLogLatLng[] = []
     let gpsTimes: number[] = []
     let polylineCoordinates: PolylineCoordunate[] | undefined
-    let gpsCoordinate: LatLng | undefined
+    let gpsCoordinate: GpsLogLatLng | undefined
 
     if (geometryType === "LineString") {
       /**
@@ -38,7 +38,7 @@ export const geoJsonStringToGpsLog = (geoJsonText: string) => {
        */
       /* @ts-ignore  */
       gpsCoordinates = coordinates.map(coordinate => {
-        return latLng(coordinate[1], coordinate[0], coordinate[2])
+        return gpsLogLatLngFromNum(coordinate[1], coordinate[0], coordinate[2])
       })
 
       const times: number[] = coordinatePropertyTimes
@@ -54,7 +54,7 @@ export const geoJsonStringToGpsLog = (geoJsonText: string) => {
         return polylineCoordunate
       })
     } else {
-      gpsCoordinate = latLng(coordinates[1], coordinates[0], coordinates[2])
+      gpsCoordinate = gpsLogLatLngFromNum(coordinates[1], coordinates[0], coordinates[2])
     }
 
     const id = uuidv4()

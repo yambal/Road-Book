@@ -4,6 +4,7 @@ import { useMap } from "react-leaflet"
 import { PointsView } from './parts/PointsView'
 import { PolylinesView } from './parts/PolylinesView'
 import { useGpsLogViewCenterLatLng, useGpsLogViewCurrentFeature } from '../../../app/selectors.ts/selector'
+import { latLngFromGpsLogLatLng } from '../../fileLoader/utils/latLng'
 
 
 export const GpsLogView = () => {
@@ -33,7 +34,7 @@ export const GpsLogView = () => {
         }
       } else {
         if (gpsLogViewCurrentFeature.coordinate) {
-          map.panTo(gpsLogViewCurrentFeature.coordinate)
+          map.panTo(latLngFromGpsLogLatLng(gpsLogViewCurrentFeature.coordinate))
         }
       }
     }

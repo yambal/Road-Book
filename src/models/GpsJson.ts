@@ -1,5 +1,3 @@
-import { LatLng } from "leaflet"
-
 export type GometryType = "Point" | "MultiPoint" | "LineString" | "MultiLineString" | "Polygon" | "MultiPolygon" | "GeometryCollection"
 
 export type GpsLogLatLng = {
@@ -9,7 +7,7 @@ export type GpsLogLatLng = {
 }
 
 export type PolylineCoordunate = {
-  coordinate: LatLng
+  coordinate: GpsLogLatLng
   time: number | undefined
 }
 
@@ -20,7 +18,7 @@ export type GpsLogFeature = {
   propertyType: string | undefined
   geometryType: GometryType
   polylineCoordinates: PolylineCoordunate[] | undefined
-  coordinate: LatLng | undefined
+  coordinate: GpsLogLatLng | undefined
 }
 
 export type GpsLog = {

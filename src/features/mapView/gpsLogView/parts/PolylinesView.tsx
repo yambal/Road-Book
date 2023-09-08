@@ -1,15 +1,15 @@
 import { Polyline } from "react-leaflet"
 import { useLineStringGpsLogFeatures } from "../../../../app/selectors.ts/selector"
 import React from "react"
-import { LatLngExpression, LatLngLiteral } from "leaflet"
+import { LatLng } from "leaflet"
+import { latLngFromGpsLogLatLng } from "../../../fileLoader/utils/latLng"
 
 type PositionsAndId = {
   featureId: string
-  positions: LatLngLiteral[]
+  positions: LatLng[]
 }
 
 export const PolylinesView = () => {
-  // const polyLines = useGpsLogPolylines()
   const lineStringGpsLogFeatures = useLineStringGpsLogFeatures()
 
   const polyLines = React.useMemo(() => {
@@ -20,11 +20,7 @@ export const PolylinesView = () => {
         if (feature.polylineCoordinates) {
           const featureId = feature.id
           const positions = feature.polylineCoordinates.map(coordinate => {
-            const latlan: LatLngExpression = {
-              lat: coordinate.coordinate.lat,
-              lng: coordinate.coordinate.lng
-            }
-            return latlan
+            return latLngFromGpsLogLatLng(coordinate.coordinate)
           })
 
           const positionsAndId: PositionsAndId = {
