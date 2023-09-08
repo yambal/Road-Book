@@ -3,11 +3,12 @@ import { LatLngBoundsExpression } from "leaflet"
 import { useMap } from "react-leaflet"
 import { PointsView } from './parts/PointsView'
 import { PolylinesView } from './parts/PolylinesView'
-import { useGpsLogViewCurrentFeature } from '../../../app/selectors.ts/selector'
+import { useGpsLogViewCenterLatLng, useGpsLogViewCurrentFeature } from '../../../app/selectors.ts/selector'
 
 
 export const GpsLogView = () => {
   const gpsLogViewCurrentFeature = useGpsLogViewCurrentFeature()
+  const center = useGpsLogViewCenterLatLng()
 
   const map = useMap()
 
@@ -37,6 +38,12 @@ export const GpsLogView = () => {
       }
     }
   }, [gpsLogViewCurrentFeature, map])
+
+  React.useEffect(() => {
+    if (center) {
+      map.panTo(center)
+    }
+  }, [center, map])
 
   return (<>
     <PolylinesView />

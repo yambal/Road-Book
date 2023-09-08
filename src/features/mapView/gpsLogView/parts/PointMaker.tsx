@@ -2,7 +2,7 @@ import { LatLngExpression, Icon } from "leaflet"
 import React from "react"
 import { Marker } from "react-leaflet"
 import { useAppDispatch } from "../../../../app/hooks"
-import { set as setCurrentFeatureId } from "../../gpsLogViewSlice"
+import { setCurrentFeatureId } from "../../gpsLogViewSlice"
 
 export type PointMakerProps = {
   id: string

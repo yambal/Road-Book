@@ -1,4 +1,4 @@
-import { LatLngExpression } from "leaflet";
+import { LatLngExpression, latLng } from "leaflet";
 import { useAppSelector } from "../hooks";
 
 export const useGpsLogFeatures = () => useAppSelector(state => state.gpsLog.features)
@@ -53,4 +53,17 @@ export const useGpsLogViewCurrentFeature = () => {
   return gpsLogFeatures.find((gpsLogFeature) => {
     return gpsLogFeature.id === gpsLogViewCurrentFeatureId
   })
+}
+
+export const useGpsLogViewCenter = () => useAppSelector(state => state.gpsLogView.center)
+export const useGpsLogViewCenterLatLng = () => {
+  const gpsLogViewCenter = useGpsLogViewCenter()
+  if (gpsLogViewCenter) {
+    const latLang = latLng({
+      lat: gpsLogViewCenter.lat,
+      lng: gpsLogViewCenter.lng,
+    })
+    return latLang
+  }
+  return undefined
 }

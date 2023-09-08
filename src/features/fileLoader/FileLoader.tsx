@@ -1,7 +1,7 @@
 import React from 'react'
 import { useAppDispatch } from '../../app/hooks'
 import { set as setGpsLog } from './gpsLogSlice'
-import { set as setCurrentFeatureId } from '../mapView/gpsLogViewSlice'
+import { setCurrentFeatureId } from '../mapView/gpsLogViewSlice'
 import { useNavigate } from 'react-router'
 import { geoJsonStringToGpsLog } from './utils/geoJsonStringToGpsLog'
 

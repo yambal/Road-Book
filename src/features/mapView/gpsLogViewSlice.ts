@@ -1,25 +1,31 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../../app/store'
+import { GpsLogLatLng } from '../../models/GpsJson'
 
 export interface GpsLogViewState {
-  currentFeatureId: string | undefined
+  currentFeatureId: string | undefined,
+  center: GpsLogLatLng | undefined
 }
 
 const initialState: GpsLogViewState = {
-  currentFeatureId: undefined
+  currentFeatureId: undefined,
+  center:undefined
 }
 
 export const gpsLogViewSlice = createSlice({
   name: 'gpsLogView',
   initialState,
   reducers: {
-    set: (state, action: PayloadAction<string | undefined>) => {
+    setCurrentFeatureId: (state, action: PayloadAction<string | undefined>) => {
       state.currentFeatureId = action.payload
+    },
+    setCenter: (state, action: PayloadAction<GpsLogLatLng | undefined>) => {
+      state.center = action.payload
     }
   }
 })
 
-export const { set } = gpsLogViewSlice.actions
+export const { setCurrentFeatureId, setCenter } = gpsLogViewSlice.actions
 
 export const selectGpsLogView = (state: RootState) => state.gpsLogView
 
