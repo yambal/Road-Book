@@ -13,7 +13,7 @@ export const PointsView = () => {
           const isCurrent = f.id === gpsLogViewCurrentFeatureId
           if (f.coordinate) {
             return (
-              <PointMaker latLang={f.coordinate} opacity={isCurrent ? 1 : 0.25} id={f.id} />
+              <PointMaker latLang={f.coordinate} opacity={isCurrent ? 1 : 0.25} key={f.id} id={f.id} />
             )
           }
           return undefined

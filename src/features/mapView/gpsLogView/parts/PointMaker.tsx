@@ -5,6 +5,7 @@ import { useAppDispatch } from "../../../../app/hooks"
 import { setCurrentFeatureId } from "../../gpsLogViewSlice"
 
 export type PointMakerProps = {
+  key: string
   id: string
   latLang: LatLngExpression
   opacity?: number
