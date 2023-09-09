@@ -2,6 +2,8 @@ import { gpxStringToGeoJson } from "./gpxStringToGeoJson"
 import { GpsLogFeature, GpsLog, PolylineCoordunate, GpsLogLatLng } from '../../../models/GpsJson'
 import { v4 as uuidv4 } from 'uuid';
 import { gpsLogLatLngFromNum } from "./latLng";
+import { getPreciseDistance } from 'geolib'
+import { GeolibInputCoordinates, GeolibInputCoordinatesWithTime, GeolibLongitudeInputValue } from "geolib/es/types";
 
 export const geoJsonStringToGpsLog = (geoJsonText: string) => {
   const geoJson = gpxStringToGeoJson(String(geoJsonText))
@@ -40,6 +42,15 @@ export const geoJsonStringToGpsLog = (geoJsonText: string) => {
       gpsCoordinates = coordinates.map(coordinate => {
         return gpsLogLatLngFromNum(coordinate[1], coordinate[0], coordinate[2])
       })
+
+      const a = gpsCoordinates.map((coordinate, index) => {
+        if (index === 0) {
+          return 0
+        }
+        const beforeCoordinate = gpsCoordinates[index - 1]
+        return getPreciseDistance({lat: beforeCoordinate.lat, lng: beforeCoordinate.lng}, {lat: coordinate.lat, lng: coordinate.lng}, 0.1)
+      })
+      console.log('distance', a)
 
       const times: number[] = coordinatePropertyTimes
       gpsTimes = times.map((time) => {
