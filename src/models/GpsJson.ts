@@ -9,6 +9,9 @@ export type GpsLogLatLng = {
 export type PolylineCoordunate = {
   coordinate: GpsLogLatLng
   time: number | undefined
+  distance: number
+  distanceFromStart: number
+  speed: number
 }
 
 export type GpsLogFeature = {
