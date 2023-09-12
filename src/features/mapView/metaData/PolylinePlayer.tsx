@@ -45,7 +45,7 @@ export const PolylinePlayer = ({
       setStartTs(undefined)
     }
 
-    if (polylineCoordinates && cursor) {
+    if (polylineCoordinates && cursor !== undefined) {
       const polylineCoordinate = polylineCoordinates[cursor]
       const to = latLng(polylineCoordinate.coordinate.lat, polylineCoordinate.coordinate.lng)
       const gpsLogLatLng: GpsLogLatLng = {
@@ -59,7 +59,6 @@ export const PolylinePlayer = ({
   }, [polylineCoordinates, cursor, dispatch])
 
   const time = React.useMemo(() => {
-
     let durationHms = ""
     let ymdHms =""
     if(currentPolylineCoordinate?.time) {
@@ -71,7 +70,6 @@ export const PolylinePlayer = ({
 
         durationHms = ('00'+h).slice( -2 ) + ":" + ('00'+m).slice( -2 ) + ":" + ('00'+s).slice( -2 )
       }
-
       ymdHms = dayjs(currentPolylineCoordinate.time * 1000).format('YYYY/MM/DD hh:mm:ss')
     }
     return {
