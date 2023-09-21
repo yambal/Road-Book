@@ -1,10 +1,11 @@
-import { Slider } from "@mui/material"
+import { Button, Slider } from "@mui/material"
 import { GpsLogFeature, GpsLogLatLng, PolylineCoordunate } from "../../../models/GpsJson"
 import React from "react"
 import { latLng } from "leaflet"
 import { useAppDispatch } from "../../../app/hooks"
 import { setCenter } from "../gpsLogViewSlice"
 import dayjs from "dayjs"
+import { cut } from "../../fileLoader/gpsLogSlice"
 
 export type PolylinePlayerProps = {
   polylineFeature: GpsLogFeature | undefined
@@ -37,6 +38,13 @@ export const PolylinePlayer = ({
       setCursor(newCursor)
     }
   }, [])
+
+  const cutHandler = React.useCallback(() => {
+    console.log('cut', cursor)
+    if (polylineFeature && cursor) {
+      dispatch(cut({featureId: polylineFeature.id, cutPoint: cursor}))
+    }
+  }, [polylineFeature, cursor, dispatch])
 
   React.useEffect(() => {
     if (polylineCoordinates && polylineCoordinates[0].time) {
@@ -86,6 +94,7 @@ export const PolylinePlayer = ({
         {currentPolylineCoordinate.distanceFromStart}, {currentPolylineCoordinate.speed}<br />
         {time.ymdHms}<br />
         {time.durationHms}
+        <Button onClick={cutHandler}>Cut</Button>
       </div>}
     </>
   )

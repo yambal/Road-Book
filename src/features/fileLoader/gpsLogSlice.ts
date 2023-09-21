@@ -21,10 +21,23 @@ export const gpsLogSlice = createSlice({
       console.log('set', action)
       state.features = action.payload.features
     },
+    cut: (state, action: PayloadAction<{featureId: String, cutPoint: number}>) => {
+      state.features.forEach(feature => {
+        if (feature.id === action.payload.featureId) {
+          feature.polylineCoordinates = feature.polylineCoordinates?.slice(0,action.payload.cutPoint)
+
+          const newFeature: GpsLogFeature = feature
+          // newFeature.polylineCoordinates = newFeature.polylineCoordinates?.slice(action.payload.cutPoint)
+          console.log(newFeature)
+        }
+      })
+
+
+    }
   }
 })
 
-export const { set } = gpsLogSlice.actions
+export const { set, cut } = gpsLogSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectCount = (state: RootState) => state.counter.value
