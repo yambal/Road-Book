@@ -42,7 +42,8 @@ export const PolylinePlayer = ({
   const cutHandler = React.useCallback(() => {
     console.log('cut', cursor)
     if (polylineFeature && cursor) {
-      dispatch(cut({featureId: polylineFeature.id, cutPoint: cursor}))
+      setCursor(0)
+      dispatch(cut({targetFeature: polylineFeature, cutPoint: cursor}))
     }
   }, [polylineFeature, cursor, dispatch])
 

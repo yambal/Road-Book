@@ -2,8 +2,6 @@ import { gpxStringToGeoJson } from "./gpxStringToGeoJson"
 import { GpsLogFeature, GpsLog, PolylineCoordunate, GpsLogLatLng } from '../../../models/GpsJson'
 import { v4 as uuidv4 } from 'uuid';
 import { gpsLogLatLngFromNum } from "./latLng";
-import { getPreciseDistance } from 'geolib'
-import { GeolibInputCoordinates, GeolibInputCoordinatesWithTime, GeolibLongitudeInputValue } from "geolib/es/types";
 import { getCoordinatesDistance } from "./getCoordinatesDistance";
 
 export const geoJsonStringToGpsLog = (geoJsonText: string) => {
