@@ -5,7 +5,7 @@ import { latLng } from "leaflet"
 import { useAppDispatch } from "../../../app/hooks"
 import { setCenter } from "../gpsLogViewSlice"
 import dayjs from "dayjs"
-import { cut } from "../../fileLoader/gpsLogSlice"
+import { cutPolyline } from "../../fileLoader/gpsLogSlice"
 
 export type PolylinePlayerProps = {
   polylineFeature: GpsLogFeature | undefined
@@ -43,7 +43,7 @@ export const PolylinePlayer = ({
     console.log('cut', cursor)
     if (polylineFeature && cursor) {
       setCursor(0)
-      dispatch(cut({targetFeature: polylineFeature, cutPoint: cursor}))
+      dispatch(cutPolyline({targetFeature: polylineFeature, cutPoint: cursor}))
     }
   }, [polylineFeature, cursor, dispatch])
 
