@@ -8,13 +8,15 @@ import { GeometryIcon } from './GeometryIcon'
 export type MapGpsLogListItemProps = {
   gpsFeature: GpsLogFeature,
   selected: boolean | undefined
-  onClick: (featureId: string | undefined) => void
+  onClick: (featureId: string | undefined) => void,
+  onDelete: (featureId: GpsLogFeature) => void,
 }
 
 export const MapGpsLogListItem = ({
   gpsFeature,
   selected = false,
-  onClick
+  onClick,
+  onDelete,
 }: MapGpsLogListItemProps) => {
   const timeText = React.useMemo(() => {
     let text = ''
@@ -40,10 +42,14 @@ export const MapGpsLogListItem = ({
     onClick(id)
   }, [onClick])
 
+  const deleteHandle = React.useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    onDelete(gpsFeature)
+  }, [gpsFeature, onDelete])
+
   return (
     <ListItem
       secondaryAction={
-        <IconButton edge="end" aria-label="delete">
+        <IconButton edge="end" aria-label="delete" onClick={deleteHandle}>
           <DeleteIcon />
         </IconButton>
       }

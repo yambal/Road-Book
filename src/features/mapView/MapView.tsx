@@ -25,8 +25,6 @@ export const MapView = ({
 
   const id = useGpsLogViewCurrentFeatureId()
 
-
-
   return (
     <div style={{
       height: '100%',

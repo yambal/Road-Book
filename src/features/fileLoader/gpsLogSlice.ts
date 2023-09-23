@@ -20,8 +20,14 @@ export const gpsLogSlice = createSlice({
   initialState,
   reducers: {
     set: (state, action: PayloadAction<GpsLog>) => {
-      console.log('set', action)
       state.features = action.payload.features
+    },
+    deleteFunction: (state, action: PayloadAction<{targetFeature: GpsLogFeature}>) => {
+      const id = action.payload.targetFeature.id
+      const filterdFeatures = state.features.filter((feature) => {
+        return feature.id !== id
+      })
+      state.features = filterdFeatures
     },
     cutPolyline: (state, action: PayloadAction<{targetFeature: GpsLogFeature, cutPoint: number}>) => {
       const targetFeature = action.payload.targetFeature
@@ -50,7 +56,7 @@ export const gpsLogSlice = createSlice({
   }
 })
 
-export const { set, cutPolyline } = gpsLogSlice.actions
+export const { set, cutPolyline, deleteFunction } = gpsLogSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectCount = (state: RootState) => state.counter.value
