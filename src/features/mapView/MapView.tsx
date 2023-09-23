@@ -1,5 +1,5 @@
 import React from 'react'
-import { MapContainer } from 'react-leaflet'
+import { MapContainer, useMapEvent } from 'react-leaflet'
 import { TileLayer, LayersControl } from 'react-leaflet'
 import { LatLngExpression } from 'leaflet'
 
@@ -8,6 +8,7 @@ import { GpsLogView } from './gpsLogView/GpsLogView'
 import { useGpsLogViewCurrentFeatureId } from '../../app/selectors.ts/selector'
 import { Paper } from '@mui/material'
 import { Metadata } from './metaData/Metadata'
+import { CenterCrossMaker } from './CenterCrossMaker'
 
 /**
  * @see https://react-leaflet.js.org/
@@ -23,6 +24,8 @@ export const MapView = ({
 }: MapViewProps) => {
 
   const id = useGpsLogViewCurrentFeatureId()
+
+
 
   return (
     <div style={{
@@ -43,7 +46,9 @@ export const MapView = ({
           aspectRatio: 16 / 9,
           flexShrink: 0
         }}
+        
       >
+        <CenterCrossMaker />
         <TileLayer
           attribution='<a href="https://maps.gsi.go.jp/development/ichiran.html">地理院タイル</a>'
           url="https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png"
